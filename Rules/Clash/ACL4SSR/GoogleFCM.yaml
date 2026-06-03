@@ -12,6 +12,7 @@ payload:
   - DOMAIN,alt8-mtalk.google.com
   - DOMAIN,mtalk.google.com
   - DOMAIN-KEYWORD,google
+  - DOMAIN-SUFFIX,gstatic.com
   - IP-CIDR,64.233.177.188/32,no-resolve
   - IP-CIDR,64.233.186.188/32,no-resolve
   - IP-CIDR,64.233.187.188/32,no-resolve
