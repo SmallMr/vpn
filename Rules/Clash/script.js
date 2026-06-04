@@ -1,3 +1,51 @@
+//https://www.clashverge.dev/guide/script.html
+
+// 国内DNS服务器
+const domesticNameservers = [
+  "https://dns.alidns.com/dns-query", // 阿里云公共DNS
+  "https://doh.pub/dns-query", // 腾讯DNSPod
+  "https://doh.360.cn/dns-query" // 360安全DNS
+];
+// 国外DNS服务器
+const foreignNameservers = [
+  "https://1.1.1.1/dns-query", // Cloudflare(主)
+  "https://1.0.0.1/dns-query", // Cloudflare(备)
+  "https://208.67.222.222/dns-query", // OpenDNS(主)
+  "https://208.67.220.220/dns-query", // OpenDNS(备)
+  "https://194.242.2.2/dns-query", // Mullvad(主)
+  "https://194.242.2.3/dns-query" // Mullvad(备)
+];
+// DNS配置
+const dnsConfig = {
+  "enable": true,
+  "listen": "0.0.0.0:1053",
+  "ipv6": true,
+  "use-system-hosts": true,
+  "cache-algorithm": "arc",
+  "enhanced-mode": "fake-ip",
+  "fake-ip-range": "198.18.0.1/16",
+  "fake-ip-filter": [
+    // 本地主机/设备
+    "+.lan",
+    "+.local",
+    // Windows网络出现小地球图标
+    "+.msftconnecttest.com",
+    "+.msftncsi.com",
+    // QQ快速登录检测失败
+    "localhost.ptlogin2.qq.com",
+    "localhost.sec.qq.com",
+    // 微信快速登录检测失败
+    "localhost.work.weixin.qq.com"
+  ],
+  "default-nameserver": [ "8.8.4.4", "1.1.1.1", "8.8.8.8","223.5.5.5", "119.29.29.29"],
+  "nameserver": [...domesticNameservers, ...foreignNameservers],
+  "proxy-server-nameserver": [...domesticNameservers, ...foreignNameservers],
+  "nameserver-policy": {
+    "geosite:private,cn,geolocation-cn": domesticNameservers,
+    "geosite:google,youtube,telegram,gfw,geolocation-!cn": foreignNameservers
+  }
+};
+
 function main(params) {
     const hongKongProxies = getProxiesByRegex(params, /香港|HK|Hong|🇭🇰/);
     const taiwanProxies = getProxiesByRegex(params, /台湾|TW|Taiwan|Wan|🇨🇳|🇹🇼/);
@@ -129,6 +177,23 @@ function main(params) {
 
     //规则
     const rules = [
+        //Postman
+        "DOMAIN,api.getpostman.com,DIRECT",
+        "DOMAIN,sync.getpostman.com,DIRECT",
+        "DOMAIN,postman.com,DIRECT",
+        "DOMAIN,www.postman.com,DIRECT",
+
+        //Nuget
+        "DOMAIN,api.nuget.org,DIRECT",
+        "DOMAIN,www.nuget.org,DIRECT",
+        "DOMAIN,nuget.org,DIRECT",
+        "DOMAIN,azuresearch-usnc.nuget.org,DIRECT",
+        "DOMAIN,azuresearch-ussc.nuget.org,DIRECT",
+        "DOMAIN,azuresearch-ea.nuget.org,DIRECT",
+        "DOMAIN,azuresearch-sea.nuget.org,DIRECT",
+        "DOMAIN,licenses.nuget.org,DIRECT",
+        "DOMAIN,nuget.cdn.azure.cn,DIRECT",
+
         "RULE-SET,LocalAreaNetwork,全球直连",
         "RULE-SET,UnBan,全球直连",
         "RULE-SET,GoogleFCM,Google",
@@ -150,21 +215,21 @@ function main(params) {
     ];
 
     const acl4ssrBaseUrl = "https://raw.githubusercontent.com/SmallMr/vpn/main/Rules/Clash/ACL4SSR/";
-    const smallBaseUrl = "https://raw.githubusercontent.com/SmallMr/vpn/main/Rules/Clash//SmallMr/";
+    const smallUrl= "https://raw.githubusercontent.com/SmallMr/vpn/main/Rules/";
     const ruleProviders = {
         LocalAreaNetwork: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "LocalAreaNetwork.yaml", path: "./ruleset/LocalAreaNetwork.yaml" },
         UnBan: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "UnBan.yaml", path: "./ruleset/UnBan.yaml" },
         BanAD: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "BanAD.yaml", path: "./ruleset/BanAD.yaml" },
         GoogleFCM: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "GoogleFCM.yaml", path: "./ruleset/GoogleFCM.yaml" },
-        GitHub: { type: "http", interval: 86400, behavior: "classical", url: smallBaseUrl + "GitHub.yaml", path: "./ruleset/GitHub.yaml" },
+        GitHub: { type: "http", interval: 86400, behavior: "classical", format: "text", url: smallUrl+"Github.list", path: "./ruleset/GitHub.list" },
         GoogleCN: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "GoogleCN.yaml", path: "./ruleset/GoogleCN.yaml" },
         SteamCN: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "SteamCN.yaml", path: "./ruleset/SteamCN.yaml" },
         Telegram: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "Telegram.yaml", path: "./ruleset/Telegram.yaml" },
-        ChatGPT: { type: "http", interval: 86400, behavior: "classical", url: smallBaseUrl + "ChatGPT.yaml", path: "./ruleset/ChatGPT.yaml" },
+        ChatGPT: { type: "http", interval: 86400, behavior: "classical", format: "text", url: smallUrl + "ChatGPT.list", path: "./ruleset/ChatGPT.list" },
         YouTube: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "YouTube.yaml", path: "./ruleset/YouTube.yaml" },
         Netflix: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "Netflix.yaml", path: "./ruleset/Netflix.yaml" },
-        Spotify: { type: "http", interval: 86400, behavior: "classical", url: smallBaseUrl + "Spotify.yaml", path: "./ruleset/Spotify.yaml" },
-        Disney: { type: "http", interval: 86400, behavior: "classical", url: smallBaseUrl + "Disney.yaml", path: "./ruleset/Disney.yaml" },
+        Spotify: { type: "http", interval: 86400, behavior: "classical", format: "text", url: smallUrl + "Spotify.list", path: "./ruleset/Spotify.list" },
+        Disney: { type: "http", interval: 86400, behavior: "classical", format: "text", url: smallUrl + "Disney.list", path: "./ruleset/Disney.list" },
         ProxyGFWlist: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "ProxyGFWlist.yaml", path: "./ruleset/ProxyGFWlist.yaml" },
         ChinaDomain: { type: "http", interval: 86400, behavior: "classical", url: acl4ssrBaseUrl + "ChinaDomain.yaml", path: "./ruleset/ChinaDomain.yaml" },
         ChinaCompanyIp: { type: "http", interval: 86400, behavior: "ipcidr", url: acl4ssrBaseUrl + "ChinaCompanyIp.yaml", path: "./ruleset/ChinaCompanyIp.yaml" },
@@ -172,6 +237,7 @@ function main(params) {
     };
 
     params.rules = rules;
+    params["dns"] = dnsConfig;
     params["proxy-groups"] = groups;
     params["rule-providers"] = ruleProviders;
 
@@ -182,6 +248,5 @@ function getProxiesByRegex(params, regex) {
     var proxies = params.proxies
         .filter((e) => regex.test(e.name))
         .map((e) => e.name);
-    console.log('sss')
     return proxies;
 }
