@@ -1,13 +1,13 @@
 {
-  "name": "My Surge Icon Set",
+  "name": "AI网站图标",
   "icons": [
     {
       "name": "claude-code",
-      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/claude-code.svg"
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Claude_AI_symbol.svg"
     },
     {
       "name": "claude",
-      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/claude.svg"
+      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Claude-ai-icon.svg"
     },
     {
       "name": "chatgpt",
