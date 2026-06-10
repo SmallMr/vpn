@@ -1,0 +1,29 @@
+{
+  "name": "My Surge Icon Set",
+  "icons": [
+    {
+      "name": "claude-code",
+      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/claude-code.svg"
+    },
+    {
+      "name": "claude",
+      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/claude.svg"
+    },
+    {
+      "name": "chatgpt",
+      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/chatgpt.svg"
+    },
+    {
+      "name": "openai",
+      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/openai.svg"
+    },
+    {
+      "name": "gemini",
+      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/gemini.svg"
+    },
+    {
+      "name": "github",
+      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/github.svg"
+    }
+  ]
+}
