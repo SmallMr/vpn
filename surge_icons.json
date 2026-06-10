@@ -3,27 +3,7 @@
   "icons": [
     {
       "name": "claude-code",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Claude_AI_symbol.svg"
-    },
-    {
-      "name": "claude",
-      "url": "https://commons.wikimedia.org/wiki/Special:Redirect/file/Claude-ai-icon.svg"
-    },
-    {
-      "name": "chatgpt",
-      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/chatgpt.svg"
-    },
-    {
-      "name": "openai",
-      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/openai.svg"
-    },
-    {
-      "name": "gemini",
-      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/gemini.svg"
-    },
-    {
-      "name": "github",
-      "url": "https://raw.githubusercontent.com/lobehub/lobe-icons/master/packages/static-svg/dark/github.svg"
+      "url": "https://upload.wikimedia.org/wikipedia/commons/b/b0/Claude_AI_symbol.svg"
     }
   ]
 }
